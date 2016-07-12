@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxVectorGraphics.h"
 
 struct Meme {
     //memeから取得したデータ各種を格納するクラス
@@ -15,6 +14,7 @@ struct Meme {
     float blink;
     float sleepy;
     float focus;
+    float date=0;
     
 };
 
@@ -99,7 +99,7 @@ public:
     
     
     
-    int h;
+    float h;
     
     float percent = 0;  //モーフィングの割合（lerp関数で使うため、1を超えないようにする）
     
@@ -146,8 +146,23 @@ public:
     float color_bli = 0;
     
     
+    float color_sle1 = 0;
+    float color_foc1 = 0;
+    float color_eye1 = 0;
+    float color_cad1 = 0;
+    float color_bli1 = 0;
+    
+    
+    
+    
+    
     float Rotate = 0;
     
     ofLight light;
+    
+    bool loop;
+    
+    
+    
     
 };
