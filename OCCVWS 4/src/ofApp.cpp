@@ -2,8 +2,15 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
+    
+    
     //ofSetFullscreen(true);
-    ofSetWindowShape(1118, 3000);
+    //ofSetWindowShape(1118, 3000);  //1118 2450
+    //ofSetWindowShape(872.04, 2340);
+    //ofSetWindowShape(1118, 2500);
+    ofSetWindowShape(1062.1, 2327.5);
+    
     ofSetFrameRate(60);
     ofSetRectMode(OF_RECTMODE_CENTER);
     ofSetBackgroundAuto(false);
@@ -12,14 +19,13 @@ void ofApp::setup(){
     light.enable();
     light.setPosition(-100, 100, 500);
     light.setAmbientColor(ofFloatColor(0.5));
-
     
     
-    ofTrueTypeFont::setGlobalDpi(100);
+    
+    ofTrueTypeFont::setGlobalDpi(150);
     //font.loadFont("SourceHanCodeJP-Normal.otf",10,true,true);
     //font.loadFont("A-OTF-FolkPro-Regular.otf",10,true,true);
-    font.loadFont("Bauhaus-Light.otf",15,true,true);
-    
+    font.load("Bauhaus-Bold.otf",17,true,true);
     
     //dataフォルダに配置したcsvファイルの名前
     string filePath = "003_ST.csv";
@@ -52,12 +58,9 @@ void ofApp::setup(){
     
     ofBackground(255);
     
-
     
-    
-    
-    
-    
+    ofBeginSaveScreenAsPDF("OCCVWS.ai");
+    //ofBeginSaveScreenAsSVG("oc.svg");
     
 }
 //--------------------------------------------------------------
@@ -67,13 +70,14 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    
     
     float values_sle[memes.size()];
     float values_foc[memes.size()];
     float values_eye[memes.size()];
     float values_cad[memes.size()];
     float values_bli[memes.size()];
+    
     
     float values_sle1[memes1.size()];
     float values_foc1[memes1.size()];
@@ -102,11 +106,11 @@ void ofApp::draw(){
     color_eye = ofMap(morph_eye, min_value_eye, max_value_eye, min_color, 255);
     color_cad = ofMap(morph_cad, min_value_cad, max_value_cad, min_color, 255);
     color_bli = ofMap(morph_bli, min_value_bli, max_value_bli, min_color, 255);
-    float color_sle1 = ofMap(morph_sle1, min_value_sle1, max_value_sle1, min_color, 255);
-    float color_foc1 = ofMap(morph_foc1, min_value_foc1, max_value_foc1, min_color, 255);
-    float color_eye1 = ofMap(morph_eye1, min_value_eye1, max_value_eye1, min_color, 255);
-    float color_cad1 = ofMap(morph_cad1, min_value_cad1, max_value_cad1, min_color, 255);
-    float color_bli1 = ofMap(morph_bli1, min_value_bli1, max_value_bli1, min_color, 255);
+    color_sle1 = ofMap(morph_sle1, min_value_sle1, max_value_sle1, min_color, 255);
+    color_foc1 = ofMap(morph_foc1, min_value_foc1, max_value_foc1, min_color, 255);
+    color_eye1 = ofMap(morph_eye1, min_value_eye1, max_value_eye1, min_color, 255);
+    color_cad1 = ofMap(morph_cad1, min_value_cad1, max_value_cad1, min_color, 255);
+    color_bli1 = ofMap(morph_bli1, min_value_bli1, max_value_bli1, min_color, 255);
     
     
     
@@ -127,8 +131,8 @@ void ofApp::draw(){
         
         
         
-        ofSetLineWidth(2);
-        ofNoFill();
+        //ofSetLineWidth(2);
+        //ofNoFill();
         
         
         
@@ -136,34 +140,58 @@ void ofApp::draw(){
     }
     
     
-    ofSetLineWidth(100);
-    int vertex_x = 2;
-    
-    ofSetColor(color_foc, 100, color_sle, 50);
-    ofDrawLine(0, h, morph_eye, h);
-    ofSetColor(color_foc1, 100, color_sle1, 50);
-    ofDrawLine(ofGetWidth(), h, -morph_eye1 + ofGetWidth(), h);
     
     
     
-    int eli_x = 6;
-    int eli_size = 5;
+    
+    
+    ofSetLineWidth(10);
+    float vertex_x = 1.1;
+    float time = 0;
+    //float time1 = 150;
+    float time1 = ofGetHeight()/900.00*140;
+    
+    
+    
+    ofSetColor(color_foc, 0, color_sle, 72);
+    ofDrawLine(0, h+time, morph_eye *vertex_x, h+time);
+    
+    ofSetColor(color_foc1, 0, color_sle1, 72);
+    ofDrawLine(ofGetWidth(), h +time1, -morph_eye1 *vertex_x + ofGetWidth(), h +time1);
+    
+    
+    int eli_x = 2;
+    int eli_size = 7;
     int eli_alpha = 100;
-    ofSetLineWidth(1);
+    ofSetLineWidth(2);
     ofNoFill();
     
-    cout << color_cad << endl;
+    ofSetColor(20,15, 200, 50);
+    
+    if(h<2100){
+        ofDrawEllipse(morph_cad *eli_x +230, h+time, eli_size, eli_size);
+    }
+    ofDrawEllipse(-morph_cad1 *eli_x -230 +ofGetWidth(), h +time1, eli_size, eli_size);
     
     
-    ofSetColor(color_cad, 0,0);
-    ofDrawEllipse(morph_cad *eli_x, h, eli_size, eli_size);
-    
-    ofSetColor(color_cad1, 0,0);
-    ofDrawEllipse(-morph_cad1    *eli_x +ofGetWidth(), h, eli_size, eli_size);
     
     
-
-
+    ofFill();
+    //ofSetColor(86,175,185);
+    ofSetColor(100,100,100);
+    for (int i = 0; i < 1; i++){
+        float fw = font.stringWidth(""+ofToString(0));
+        float x = ofGetWidth()/2-fw/2;
+        font.drawString(""+ofToString(i+9), x,55 + ((ofGetHeight()-80) /15)*i);
+        //font.getStringMesh(""+ofToString(i+9), x, 55+((ofGetHeight()-80)/15)*i);
+    }
+    for (int i = 1; i < 16; i++){
+        float fw = font.stringWidth(""+ofToString(10));
+        float x = ofGetWidth()/2-fw/2;
+        font.drawString(""+ofToString(i+9), x, 55+((ofGetHeight()-80)/15)*i);
+    }
+    
+    
     
     if(percent >= 1.0){
         index += 1;
@@ -193,39 +221,30 @@ void ofApp::draw(){
             bli1 = memes1[index1].blink1;
             next_bli1 = memes1[index1+1].blink1;
             
-            h+= 1;
+            //h+= 1;
+            h+= ofGetHeight()/900.000;
         }
         percent = 0;
     }
     
     
     
-    ofFill();
-    //ofSetColor(86,175,185);
-    ofSetColor(0);
-    for (int i = 0; i < 10; i++){
-        float fw = font.stringWidth(""+ofToString(0));
-        float x = ofGetWidth()/2-fw/2;
-        font.drawString(""+ofToString(i), x, 20 + ((ofGetHeight()-20) /24)*i);
-    }
-    for (int i = 10; i < 25; i++){
-        float fw = font.stringWidth(""+ofToString(10));
-        float x = ofGetWidth()/2-fw/2;
-        font.drawString(""+ofToString(i), x, 20+((ofGetHeight()-20)/24)*i);
+    
+    if(loop){
+        ofEndSaveScreenAsPDF();
+        //ofEndSaveScreenAsSVG();
+        
+        loop = false;
     }
     
-
     
-    
-
-            
-            
-            
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if(key == 's')
+        loop = true;
+    
 }
 
 //--------------------------------------------------------------
