@@ -31,5 +31,5 @@ ipch/
 *.pdb
 *.idb
 *.pch
-
-
+*.otf
+*.pdf
